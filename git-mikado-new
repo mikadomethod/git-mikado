@@ -1,0 +1,22 @@
+#!/bin/sh
+
+usage() {
+	echo "usage: git mikado new branch-name"
+	echo ""
+	echo "This will open your preconfigured editor to add the Mikado Goal"
+}
+
+cmd_default() {
+	if [ $# -lt 2 ]; then
+		usage
+		exit 1
+	fi
+    git checkout -b $2
+    git config branch.$2.description "$3"
+}
+
+cmd_help() {
+    echo help
+}
+
+

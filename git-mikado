@@ -1,0 +1,63 @@
+#!/bin/sh
+# 
+# This is the git mikado extension to git.
+#
+
+# enable debug mode
+if [ "$DEBUG" = "yes" ]; then
+	set -x
+fi
+
+# The sed expression here replaces all backslashes by forward slashes.
+# This helps our Windows users, while not bothering our Unix users.
+export GITMIKADO_DIR=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+
+usage() {
+	echo "usage: git mikado <subcommand>"
+	echo
+	echo "Available subcommands are:"
+	echo "   new       Create a Mikado goal, the root of the restructuring, represented by a new branch."
+	echo
+	echo "Planned subcommands are:"
+	echo "   prereq    Create a new prerequisite branch for the current. Stashes all changes in this branch, creates new branch and switches to it."
+	echo "   done      Mark the current node as done. Will merge it back to its origin and any node marking it as a prerequisite"
+	echo "   cancel    Remove the current branch, and all of its prerequisites."
+	echo "   prune     Delete all branches marked as done."
+	echo "   graph     Create a graph (png) representing your Mikado graph."
+	echo
+	echo "Try 'git mikado <subcommand> help' for details."
+}
+
+main() {
+	if [ $# -lt 1 ]; then
+		usage
+		exit 1
+	fi
+
+	# This environmental variable fixes non-POSIX getopt style argument
+	# parsing, effectively breaking subcommand parsing on several
+	# Linux platforms.
+	export POSIXLY_CORRECT=1
+
+	COMMAND="$0";
+	echo "command $COMMAND";
+	
+	# sanity checks
+	SUBCOMMAND="$1";
+	echo "subcommand $SUBCOMMAND";
+
+	if [ ! -e "$GITMIKADO_DIR/git-mikado-$SUBCOMMAND" ]; then
+	    echo "Cannot find subcommand file $GITMIKADO_DIR/git-mikado-$SUBCOMMAND";
+		usage
+		exit 1
+	fi
+
+	# load command file
+	. "$GITMIKADO_DIR/git-mikado-$SUBCOMMAND"
+	FLAGS_PARENT="git mikado $SUBCOMMAND"
+
+    cmd_default "$@"
+}
+
+
+main "$@"

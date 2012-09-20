@@ -1,0 +1,6 @@
+#!/bin/sh
+
+./publish
+
+git mikado new goal-branch "Description"
+&& git config branch.goal-branch.description == "Description"

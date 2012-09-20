@@ -1,0 +1,2 @@
+chmod 755 git-mikado*
+cp git-mikado* ~/bin
