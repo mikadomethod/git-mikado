@@ -1,9 +1,8 @@
 #!/bin/sh
 
 usage() {
-	echo "usage: git mikado new branch-name"
-	echo ""
-	echo "This will open your preconfigured editor to add the Mikado Goal"
+	echo "usage: git mikado new '<mikado goal text>' <branch-name>"
+	echo
 }
 
 cmd_default() {
@@ -11,8 +10,12 @@ cmd_default() {
 		usage
 		exit 1
 	fi
-    git checkout -b $2
-    git config branch.$2.description "$3"
+	
+	DESCRIPTION = $2;
+	BRANCH_NAME = $3;
+
+    git checkout -b $BRANCH_NAME
+    git config branch.$BRANCH_NAME.description "$DESCRIPTION"
 }
 
 cmd_help() {
