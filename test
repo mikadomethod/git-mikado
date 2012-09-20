@@ -7,7 +7,7 @@ cd build
 
 git init .
 touch afile
-git add -all
+git add --all
 git commit -m "First commit"
 git mikado new "Mikado goal" goal-branch 
 git mikado prereq "Prereq 1" prereq1 
