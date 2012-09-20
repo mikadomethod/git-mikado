@@ -1,6 +1,20 @@
 #!/bin/sh
 
 ./publish
+rm -rf build
+mkdir build
+cd build 
 
-git mikado new goal-branch "Description"
-&& git config branch.goal-branch.description == "Description"
+git init .
+touch afile
+git add -all
+git commit -m "First commit"
+git mikado new "Mikado goal" goal-branch 
+git mikado prereq "Prereq 1" prereq1 
+# git mikado parent
+git checkout goal-branch
+git mikado prereq "Prereq 2" prereq2 
+git mikado prereq "Prereq 2.1" prereq2-1 
+git mikado prereq "Prereq 2.1.1" prereq2-1-1
+git log --branch 
+

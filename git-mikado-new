@@ -2,6 +2,7 @@
 
 usage() {
 	echo "usage: git mikado new '<mikado goal text>' <branch-name>"
+	echo "Use on a clean branch, with no pending stuff"
 	echo
 }
 
@@ -10,12 +11,23 @@ cmd_default() {
 		usage
 		exit 1
 	fi
+	desc=$2;
+	newBranch=$3;
 	
-	DESCRIPTION = $2;
-	BRANCH_NAME = $3;
-
-    git checkout -b $BRANCH_NAME
-    git config branch.$BRANCH_NAME.description "$DESCRIPTION"
+	#Before change
+	branch_name=`git symbolic-ref HEAD 2>/dev/null`
+    currentBranch=${branch_name##refs/heads/}	
+    echo $currentBranch
+    	
+	#Change
+	
+    git checkout -b $newBranch
+    git config branch.$newBranch.mikado.starttag "`git log -1 --oneline`" #want the first part only
+    git config branch.$newBranch.mikado.nodetext "$desc"
+    git config branch.$newBranch.mikado.parents ""
+    git config branch.$newBranch.mikado.originatingbranch $currentBranch
+    
+    git config branch.$newBranch.description "$desc"
 }
 
 cmd_help() {
