@@ -6,15 +6,18 @@ mkdir build
 cd build 
 
 git init .
-touch afile
-git add --all
-git commit -m "First commit"
+touch afile; git add --all; git commit -m "First commit"
 git mikado new "Mikado goal" goal-branch 
+touch goalfile;
 git mikado prereq "Prereq 1" prereq1 
+touch prereq1file;
 # git mikado parent
 git checkout goal-branch
 git mikado prereq "Prereq 2" prereq2 
+touch prereq2file;
 git mikado prereq "Prereq 2.1" prereq2-1 
+touch prereq21file;
 git mikado prereq "Prereq 2.1.1" prereq2-1-1
-git log --branch 
+touch prereq211file;
+git log --graph 
 
