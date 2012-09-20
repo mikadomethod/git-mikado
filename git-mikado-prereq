@@ -11,14 +11,17 @@ cmd_default() {
 		exit 1
 	fi
 	
-	desc = $2;
-	newBranch = $3;
+	desc=$2;
+	newBranch=$3;
 	
 	#Before change
-    currentBranch="$(git symbolic-ref HEAD 2>/dev/null)"	
-    prereqs="$(git config branch.$currentBranch.mikado.prereqs)"
+	branch_name=`git symbolic-ref HEAD 2>/dev/null`
+    currentBranch=${branch_name##refs/heads/}	
+    echo $currentBranch
     
-	git config branch.$currentBranch.mikado.prereqs = "$prereqs $newBranch"
+    prereqs=`git config branch.$currentBranch.mikado.prereqs`
+    
+	git config branch.$currentBranch.mikado.prereqs "$prereqs $newBranch"
 	git stash save -u -a "stash-in-$currentBranch-before-$newBranch" #one stash per prereq
 	
 	#Reapply by name
@@ -27,8 +30,9 @@ cmd_default() {
 	
 	# Should we reset to 
     git checkout -b $newBranch
-    git config branch.$newBranch.mikado.starttag `git log -1 --oneline` #want the first part only
+    git config branch.$newBranch.mikado.starttag "`git log -1 --oneline`" #want the first part only
     git config branch.$newBranch.mikado.nodetext "$desc"
+    git config branch.$newBranch.mikado.parents $currentBranch
     git config branch.$newBranch.description "$desc"
 }
 
