@@ -32,7 +32,7 @@ cmd_default() {
     git checkout -b $newBranch
     git config branch.$newBranch.mikado.starttag "`git log -1 --oneline`" #want the first part only
     git config branch.$newBranch.mikado.nodetext "$desc"
-    git config branch.$newBranch.mikado.parents $currentBranch
+    git config branch.$newBranch.mikado.parent $currentBranch
     git config branch.$newBranch.description "$desc"
 }
 

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+usage() {
+	echo "usage: git mikado parent"
+	echo "Takes you to the Mikado goal that the current prereq originated from."
+}
+
+cmd_default() {	
+	#Before change
+	branch_name=`git symbolic-ref HEAD 2>/dev/null`
+    currentBranch=${branch_name##refs/heads/}	
+    echo $currentBranch
+    
+    git stash save -u -a "wip-stash-for-$currentBranch" #Stash the unsaved work in this branch
+	
+    parent=`git config branch.$currentBranch.mikado.parent`
+    
+    git checkout $parent
+
+    git stash apply stash^{/$("wip-stash-for-$parent")} #reapply unsaved work in parent
+}
+
+cmd_help() {
+    echo help
+}
+
+

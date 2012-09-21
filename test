@@ -11,8 +11,7 @@ git mikado new "Mikado goal" goal-branch
 touch goalfile;
 git mikado prereq "Prereq 1" prereq1 
 touch prereq1file;
-# git mikado parent
-git checkout goal-branch
+git mikado parent
 git mikado prereq "Prereq 2" prereq2 
 touch prereq2file;
 git mikado prereq "Prereq 2.1" prereq2-1 
@@ -20,4 +19,10 @@ touch prereq21file;
 git mikado prereq "Prereq 2.1.1" prereq2-1-1
 touch prereq211file;
 git log --graph 
-
+# git mikado graph goal-branch
+# git mikado done
+# git mikado done 
+# git co prereq1
+# git mikado depends prereq2-1-1
+# git mikado graph goal-branch
+f
