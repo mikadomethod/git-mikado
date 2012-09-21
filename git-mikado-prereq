@@ -22,6 +22,8 @@ cmd_default() {
     prereqs=`git config branch.$currentBranch.mikado.prereqs`
     
 	git config branch.$currentBranch.mikado.prereqs "$prereqs $newBranch"
+	git add --all
+	git commit -m "Moving to prereq $newBranch: '$desc'"
 	git stash save -u -a "stash-in-$currentBranch-before-$newBranch" #one stash per prereq
 	
 	#Reapply by name

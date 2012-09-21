@@ -11,13 +11,12 @@ cmd_default() {
     currentBranch=${branch_name##refs/heads/}	
     echo $currentBranch
     
-    git stash save -u -a "wip-stash-for-$currentBranch" #Stash the unsaved work in this branch
-	
     parent=`git config branch.$currentBranch.mikado.parent`
+
+    git add --all
+    git commit -m "Moving to parent: $parent"
     
     git checkout $parent
-
-    git stash apply stash^{/$("wip-stash-for-$parent")} #reapply unsaved work in parent
 }
 
 cmd_help() {
