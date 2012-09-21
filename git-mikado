@@ -40,11 +40,9 @@ main() {
 	export POSIXLY_CORRECT=1
 
 	COMMAND="$0";
-	echo "command $COMMAND";
 	
 	# sanity checks
 	SUBCOMMAND="$1";
-	echo "subcommand $SUBCOMMAND";
 
 	if [ ! -e "$GITMIKADO_DIR/git-mikado-$SUBCOMMAND" ]; then
 	    echo "Cannot find subcommand file $GITMIKADO_DIR/git-mikado-$SUBCOMMAND";
