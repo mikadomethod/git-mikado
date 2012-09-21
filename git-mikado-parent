@@ -14,7 +14,7 @@ cmd_default() {
     parent=`git config branch.$currentBranch.mikado.parent`
 
     git add --all
-    git commit -m "Moving to parent: $parent"
+    git commit -m "To parent: $parent"
     
     git checkout $parent
 }

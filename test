@@ -25,4 +25,4 @@ git log --graph
 # git co prereq1
 # git mikado depends prereq2-1-1
 # git mikado graph goal-branch
-f
+
