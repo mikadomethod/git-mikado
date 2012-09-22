@@ -22,17 +22,14 @@ cmd_default() {
     prereqs=`git config branch.$currentBranch.mikado.prereqs`
     
 	git config branch.$currentBranch.mikado.prereqs "$prereqs $newBranch"
-	git stash save -u -a "stash-in-$currentBranch-before-$newBranch" #one stash per prereq
-	
-	#Reapply by name
-	#git stash apply stash^{/$("stash-before-$currentBranch")}
-	#Change
-	
-	# Should we reset to 
+	git add --all
+	git commit -m "Before prereq $newBranch: '$desc'"
+
+    #New branch	
     git checkout -b $newBranch
     git config branch.$newBranch.mikado.starttag "`git log -1 --oneline`" #want the first part only
     git config branch.$newBranch.mikado.nodetext "$desc"
-    git config branch.$newBranch.mikado.parents $currentBranch
+    git config branch.$newBranch.mikado.parent $currentBranch
     git config branch.$newBranch.description "$desc"
 }
 
