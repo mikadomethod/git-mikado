@@ -6,7 +6,7 @@ usage() {
 }
 
 cmd_default() {	
-	#Before change
+	#Before change	
 	branch_name=`git symbolic-ref HEAD 2>/dev/null`
     currentBranch=${branch_name##refs/heads/}	
     echo $currentBranch
